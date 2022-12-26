@@ -1,0 +1,14 @@
+version: '3.6'
+
+services:
+  mailhog:
+    container_name: mailhog_nuxt_mailer
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  database:
+    driver: local
