@@ -3,6 +3,7 @@ import SMTPTransport from 'nodemailer/lib/smtp-transport'
 import consola from 'consola'
 
 const runtimeConfig = useRuntimeConfig()
+// todo: add error handling
 
 const defaultTransporter = createTransport({
   host: runtimeConfig.mailerHost,
