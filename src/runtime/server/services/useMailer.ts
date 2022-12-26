@@ -1,6 +1,7 @@
 import { createTransport, getTestMessageUrl, Transporter } from 'nodemailer'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
 import consola from 'consola'
+import { useRuntimeConfig } from '#imports'
 
 const runtimeConfig = useRuntimeConfig()
 // todo: add error handling

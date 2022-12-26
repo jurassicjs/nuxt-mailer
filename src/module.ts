@@ -9,7 +9,10 @@ export interface ModuleOptions {
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'nuxt-mailer',
-    configKey: 'mailer'
+    configKey: 'mailer',
+    compatibility: {
+      nuxt: '^3.0.0'
+    }
   },
   defaults: {
     addPlugin: false
