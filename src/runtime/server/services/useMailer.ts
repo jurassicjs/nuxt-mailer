@@ -13,8 +13,9 @@ const defaultTransporter = createTransport({
   auth: {
     user: runtimeConfig.mailerUser,
     pass: runtimeConfig.mailerPass
-  }
-})
+  },
+  attachments: null
+} as unknown as TransporterOptions)
 
 const gmailTransporter = () => {
   return createTransport({
@@ -32,6 +33,7 @@ export type TransporterOptions = {
   port?: number,
   secure?: boolean,
   auth?: { user: string, pass: string }
+  attachments?: []
 }
 
 const customTransporter = (options: TransporterOptions) => {
@@ -40,7 +42,8 @@ const customTransporter = (options: TransporterOptions) => {
     host: options.host,
     port: options.port,
     secure: options.secure,
-    auth: options.auth
+    auth: options.auth,
+    attachments: options.attachments
   })
 }
 
@@ -53,6 +56,11 @@ interface MailInterface {
   subject: string;
   text?: string;
   html: string;
+  attachments?: {
+    filename: string,
+    path: string,
+    contentType: string
+  }[];
 }
 
 export type SendMailProps = {
@@ -77,7 +85,8 @@ export const sendMail = async (
       bcc: options.bcc,
       subject: options.subject,
       text: options.text,
-      html: options.html
+      html: options.html,
+      attachments: options.attachments
     })
     .then((info) => {
       if (runtimeConfig.mailerLog === 'yes') {
@@ -90,6 +99,12 @@ export const sendMail = async (
       return info
     }).catch((err) => {
       consola.error('Error sending email from nuxt-mailer: ' + err)
+
+      if(err.message.includes('getaddrinfo ENOTFOUND')){
+        consola.error(`Error Hint: could not connect to host
+        NUXT_MAILER_HOST is set to ${runtimeConfig.mailerHost} `)
+      }
+
       return err
     })
 }
@@ -98,6 +113,7 @@ export const useMailer = () => {
   return {
     sendMail,
     gmailTransporter,
-    customTransporter
+    customTransporter,
+    defaultTransporter
   }
 }

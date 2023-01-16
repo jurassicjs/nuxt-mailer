@@ -26,8 +26,6 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     const { resolve } = createResolver(import.meta.url)
-    const composables = resolve('./runtime/composables')
-    addImportsDir(composables)
 
     nuxt.hook('nitro:config', (nitroConfig) => {
       nitroConfig.alias = nitroConfig.alias || {}
