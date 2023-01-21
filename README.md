@@ -89,11 +89,8 @@ Now let's add the necessary config
 ```ts
 export default defineNuxtConfig({
   modules: [
-    NuxtMailer
+    'nuxt-mailer'
   ],
-  mailer: {
-    addPlugin: true
-  },
   runtimeConfig: {
     mailerUser: '',
     mailerPass: '',
